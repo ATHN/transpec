@@ -53,10 +53,8 @@ module Transpec
 
       @in_copied_project = true
 
-      Dir.mktmpdir do |tmpdir|
-        copied_project_path = DirectoryCloner.copy_recursively(project.path, tmpdir)
-        Dir.chdir(copied_project_path, &block)
-      end
+      copied_project_path = File.join(ENV['RSPEC_CLONE_DIR'], ENV['COMPONENT'])
+      Dir.chdir(copied_project_path, &block)
     ensure
       @in_copied_project = false
     end
